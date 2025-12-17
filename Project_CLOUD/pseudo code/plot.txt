@@ -1,0 +1,23 @@
+CONNECT to MongoDB database
+LOAD collections:
+    large_orders
+    stats
+    invalid_orders
+
+RETRIEVE all valid large orders
+
+COMPUTE number of orders per product
+DRAW bar chart (orders per product)
+
+EXTRACT prices from orders
+DRAW histogram of prices
+DRAW boxplot of price distribution
+
+RETRIEVE statistics sorted by timestamp
+EXTRACT average prices over time
+DRAW line chart of average price evolution
+
+COUNT valid and invalid orders
+DRAW pie chart comparing valid vs invalid data
+
+DISPLAY all charts
