@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # ZooKeeper service
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
     environment:
@@ -8,6 +9,7 @@ services:
     ports:
       - "2181:2181"
 
+  # Kafka broker service
   kafka:
     image: confluentinc/cp-kafka:7.5.0
     depends_on:
@@ -20,3 +22,34 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  # Kafka topic initializer (runs once)
+  kafka-init:
+    image: confluentinc/cp-kafka:7.5.0
+    depends_on:
+      - kafka
+    command: >
+      bash -c "
+      kafka-topics --bootstrap-server kafka:9092 \
+      --create \
+      --if-not-exists \
+      --topic orders \
+      --replication-factor 1 \
+      --partitions 1
+      "
+
+  # MongoDB service
+  mongo:
+    image: mongo:7.0
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - mongo_data:/data/db
+
+# Docker volumes
+volumes:
+  mongo_data:
