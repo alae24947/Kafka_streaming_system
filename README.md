@@ -1,4 +1,4 @@
-# cloud project
+# Kafka streaming system
 With the rapid growth of digital applications, many systems are required to process large
 amounts of data in real time. Examples include online shopping platforms, social media,
 Internet of Things (IoT) devices, and system logs. In such environments, data is generated
